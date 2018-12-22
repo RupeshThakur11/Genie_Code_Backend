@@ -1,68 +1,47 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
-const moment = require('moment-timezone');
 
-/**
- * Scheduled Message Schema
- * @private
- */
-const scheduledMessageSchema = new mongoose.Schema({
-  userFrom: {
+
+
+const scheduleMessageSchema = new mongoose.Schema({
+  senderUserId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+    ref: 'User'
   },
-  userTo: {
+  senderName: {
+    type: String
+  },
+  receiverUserId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+    ref: 'User'
+  },
+  scheduledTime: {
+    type: Date,
+    default: +new Date() + 1*24*60*60*1000
+  },
+  scheduleDone: {
+    type: Boolean,
+    default:false
+  },
+  scheduleNumber: {
+    type: Number
+  },
+  heighestLike: {
+    type: String
+  },
+  likes: {
+    type: String
   },
   message: {
     type: String,
-    required: true
+    default: '',
+    trim: true,
+    required: 'Message cannot be blank'
   },
-
-  savingTime: {
-    type: Date,
-    default: Date.now
-  },
-  sendingTime: {
-    type: Date,
-    required: true
-  },
-  expires: {
-    type: Boolean,
-    default: false
+  timeLeft: {
+    type: Number
   }
-});
+})
 
-scheduledMessageSchema.statics = {
 
-  /**
-   * Generate a refresh token object and saves it into the database
-   *
-   * @param {User} user
-   * @returns {RefreshToken}
-   */
-  // generate(user) {
-  //   const userId = user._id;
-  //   const userEmail = user.email;
-  //   const token = `${userId}.${crypto.randomBytes(40).toString('hex')}`;
-  //   const expires = moment().add(30, 'days').toDate();
-  //   const tokenObject = new RefreshToken({
-  //     token,
-  //     userId,
-  //     userEmail,
-  //     expires,
-  //   });
-  //   tokenObject.save();
-  //   return tokenObject;
-  // },
-
-};
-
-/**
- * @typedef RefreshToken
- */
-const ScheduledMessage = mongoose.model('ScheduledMessage', scheduledMessageSchema);
-module.exports = ScheduledMessage;
+const ScheduleMessage = mongoose.model('ScheduleMessage', scheduleMessageSchema);
+module.exports = ScheduleMessage;
