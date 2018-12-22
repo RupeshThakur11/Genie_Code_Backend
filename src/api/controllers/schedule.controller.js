@@ -6,24 +6,28 @@ const crontab = require('node-crontab');
 
 
 
-const handleError = (res, err) =>{
+const handleError = (res, err) => {
 	return res.status(500).send(err);
 }
 
 
 exports.index = (req, res) => {
 	ScheduleMessage.find({}, (err, messages) => {
+
 		if (err) {
 			res.status(200).send({
 				status: 'error',
 				message: 'Something went wrong',
 				errorInfo: err
 			})
-			return res.status(200).send({
-				status: 'success',
-				response: messages
-			})
+
+
 		}
+
+		return res.status(200).send({
+			status: 'success',
+			res: messages
+		})
 	})
 }
 
@@ -55,7 +59,10 @@ exports.create = (req, res) => {
 				errorInfo: err
 			})
 		}
-		return res.status(201).json(messages);
+		return res.status(201).json({
+			status: 'schedule message saved successfully',
+			messages
+		});
 	})
 }
 
