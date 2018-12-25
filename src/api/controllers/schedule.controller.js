@@ -125,3 +125,23 @@ exports.destroy = (req, res) => {
 		})
 	})
 }
+
+exports.listMessagesByReceiverID = async (req, res) => {
+
+	try {
+		let ids = req.body;
+		console.log(ids);
+		let listOfMessages = await ScheduleMessage.find({
+			'receiverUserId': {
+				$in: ids
+			}
+		});
+
+		res.status(200).send({
+			status: 'success',
+			response: listOfMessages
+		});
+	} catch (err) {
+		return res.status(500).send(err);
+	}
+}

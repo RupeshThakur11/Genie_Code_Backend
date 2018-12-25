@@ -16,11 +16,11 @@ const scheduleMessageSchema = new mongoose.Schema({
   },
   scheduledTime: {
     type: Date,
-    default: +new Date() + 1*24*60*60*1000
+    default: +new Date() + 1 * 24 * 60 * 60 * 1000
   },
   scheduleDone: {
     type: Boolean,
-    default:false
+    default: false
   },
   scheduleNumber: {
     type: Number
@@ -37,11 +37,19 @@ const scheduleMessageSchema = new mongoose.Schema({
     trim: true,
     required: 'Message cannot be blank'
   },
+  token: {
+    type: String,
+    trim: true
+  },
   timeLeft: {
     type: Number
   }
 })
 
-
+scheduleMessageSchema.index({
+  receiverUserId: 1,
+  senderUserId: 1,
+  senderName: 1
+});
 const ScheduleMessage = mongoose.model('ScheduleMessage', scheduleMessageSchema);
 module.exports = ScheduleMessage;

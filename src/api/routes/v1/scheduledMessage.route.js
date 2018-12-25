@@ -17,14 +17,17 @@ const router = express.Router();
  * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
  */
 router.route('/message')
-  .post(controller.create);
+	.post(controller.create);
 router.route('/messages')
-  .get(controller.index);
+	.get(controller.index);
 router.route('/message/:id')
-  .get(controller.show);
+	.get(controller.show);
 router.route('/message/:id')
-  .put(controller.update);
+	.put(controller.update);
 router.route('/message/:id')
-  .delete(controller.destroy);    	      
+	.delete(controller.destroy);
+
+router.route('/message/receivers')
+	.post(controller.listMessagesByReceiverID);
 
 module.exports = router;
