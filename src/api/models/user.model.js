@@ -159,7 +159,7 @@ const userSchema = new mongoose.Schema({
   firebase_token: {
     type: String
   },
-  emailVerified: {
+  revealYourself: {
     type: Boolean,
     default: false,
   },
