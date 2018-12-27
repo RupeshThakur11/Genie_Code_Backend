@@ -58,6 +58,14 @@ const userSchema = new mongoose.Schema({
   display_name_as: {
     type: String
   },
+  profile: {
+    firstName: {
+      type: String
+    },
+    lastName: {
+      type: String
+    }
+  },
   services: {
     facebook: String,
     google: String,
@@ -163,7 +171,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  message:{
+  message: {
     type: String
   },
   userID: {
@@ -410,7 +418,7 @@ userSchema.statics = {
       user.services[service] = id;
       if (!user.name) user.name = name;
       if (!user.picture) user.picture = picture;
-      if(!user.message) user.message='User already registered';
+      if (!user.message) user.message = 'User already registered';
       return user.save();
     }
     const password = uuidv4();

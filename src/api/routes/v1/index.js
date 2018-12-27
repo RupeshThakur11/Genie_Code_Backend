@@ -5,7 +5,7 @@ const verificationRoutes = require('./verify.route');
 const generationRoutes = require('./generate.route');
 const uploadRoutes = require('./upload.route');
 const scheduledRoutes = require('./scheduledMessage.route');
-
+const chatRoutes = require('./chat.route');
 const router = express.Router();
 
 /**
@@ -24,5 +24,6 @@ router.use('/proto',uploadRoutes);
 router.use('/verify', verificationRoutes);
 router.use('/generate', generationRoutes);
 router.use('/automatic', scheduledRoutes);
+router.use('/chat', chatRoutes);
 
 module.exports = router;
