@@ -409,6 +409,8 @@ exports.revealYourself = async (req, res, next) => {
           }
         });
         if (revealToUsers != '') {
+          user['revealUsersID'].push(ids);
+          user.save()
           return res.status(200).json({
             message: `Data is revealed for users ${ids}`,
             users: user
