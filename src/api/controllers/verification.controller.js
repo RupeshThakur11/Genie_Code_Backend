@@ -1,22 +1,22 @@
-var mjml2html = require('mjml');
-var credentials = require('../../config/credentials');
-var registrationTemplate = require('../../templates/email/registration');
-var client = require('../../config/client');
-var BulkMailer = require("../services/bulkEmail");
+const mjml2html = require('mjml');
+const credentials = require('../../config/credentials');
+const registrationTemplate = require('../../templates/email/registration');
+const client = require('../../config/client');
+const BulkMailer = require("../services/bulkEmail");
 const User = require('../models/user.model');
 
-var bulkMailer = new BulkMailer({
+let bulkMailer = new BulkMailer({
   transport: credentials.email,
   verbose: true
 });
 
-var __mailerOptions = (hash, options) => {
-  var companyLogo = client.logoUrl;
-  var verificationUrl = `${client.baseUrl}${client.verifyEmail}/${hash}`;
-  var template = registrationTemplate(companyLogo, verificationUrl);
-  var html = mjml2html(template);
+let __mailerOptions = (hash, options) => {
+  let companyLogo = client.logoUrl;
+  let verificationUrl = `${client.baseUrl}${client.verifyEmail}/${hash}`;
+  let template = registrationTemplate(companyLogo, verificationUrl);
+  let html = mjml2html(template);
 
-  var mailOptions = options;
+  let mailOptions = options;
   mailOptions['html'] = html.html;
   mailOptions['text'] = 'Hi there!';
   mailOptions['from'] = credentials.email.auth.user;
@@ -26,7 +26,7 @@ var __mailerOptions = (hash, options) => {
 }
 
 exports.sendVerificationEmail = (hash, options) => {
-  var mailerOptions = __mailerOptions(hash, options);
+  let mailerOptions = __mailerOptions(hash, options);
   bulkMailer.send(mailerOptions, true, (error, result) => { // arg1: mailinfo, agr2: parallel mails, arg3: callback
     if (error) {
       console.error(error);

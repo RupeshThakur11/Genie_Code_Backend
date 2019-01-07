@@ -172,12 +172,14 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  revealUsersID: {
-    type: Array,
-    default: [],
-    unique:true
-  },
-  // revealUsersID:[{ type: String, unique: true }],
+  revealToUsersID: [{
+    type: String,
+    unique: true
+  }],
+  revealFromUsersID: [{
+    type: String,
+    unique: true
+  }],
   message: {
     type: String
   },
@@ -203,7 +205,7 @@ const userSchema = new mongoose.Schema({
  * - validations
  * - virtuals
  */
-userSchema.plugin(arrayUniquePlugin); 
+userSchema.plugin(arrayUniquePlugin);
 autoIncrement.initialize(mongoose.connection);
 userSchema.plugin(autoIncrement.plugin, {
   model: 'User',

@@ -130,7 +130,6 @@ exports.listMessagesByReceiverID = async (req, res) => {
 
 	try {
 		let ids = req.body;
-		console.log(ids);
 		let listOfMessages = await ScheduleMessage.find({
 			'receiverUserId': {
 				$in: ids
