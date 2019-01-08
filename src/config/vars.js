@@ -18,5 +18,6 @@ module.exports = {
   },
   logs: process.env.NODE_ENV === 'production' ? 'combined' : 'dev',
   sendVerificationMail: true,
-  sendVerificationSms: true
+  sendVerificationSms: true,
+  serverkey:'AAAAz3AZTKg:APA91bEu6rx4ZqjnyobmZLscH3uhGb36zC0heODtPn1IUPNYrcx-KcyRxNvYznl-mBW1_wXzg9Z2xd8oVs-mwdewzJokgeeN0kkvZcC1IG9S4xtLZNZQwhPy-Wng3-2By_U5hFUNNNBN'
 };

@@ -418,13 +418,15 @@ exports.revealYourself = async (req, res, next) => {
             users: user
           });
 
-        } else if (revealToUsers != '' && user.revealYourself === true) {
-          return res.status(200).json({
-            message: `Data is Alraedy revealed for users ${ids}`,
-            users: user
+        } 
+        // else if (revealToUsers != '' && user.revealYourself === true) {
+        //   return res.status(200).json({
+        //     message: `Data is Alraedy revealed for users ${ids}`,
+        //     users: user
 
-          })
-        } else {
+        //   })
+        // } 
+        else {
           return res.status(203).json({
             message: `No Content is available for ${ids}`
           })

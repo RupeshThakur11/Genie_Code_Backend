@@ -3,8 +3,12 @@ const ScheduleMessage = require('../models/scheduledMessage.model');
 const User = require('../models/user.model');
 const schedule = require('node-schedule');
 const crontab = require('node-crontab');
+const FCM = require('fcm-push');
+const {
+	serverkey
+} = require('../../config/vars');
 
-
+const fcm = new FCM(serverkey);
 
 const handleError = (res, err) => {
 	return res.status(500).send(err);
@@ -28,6 +32,25 @@ exports.index = (req, res) => {
 			status: 'success',
 			res: messages
 		})
+		var message = {
+			to: '<insert-device-token>',
+			collapse_key: '<insert-collapse-key>',
+			data: {
+				key1: 'random-data-value1',
+				key2: 'random-data-value2'
+			},
+			notification: {
+				title: 'Title of the notification',
+				body: 'Body of the notification'
+			}
+		};
+		fcm.send(message, function(err, response) {
+			if (err) {
+				console.log("Something has gone wrong !");
+			} else {
+				console.log("Successfully sent with resposne :", response);
+			}
+		});
 	})
 }
 
