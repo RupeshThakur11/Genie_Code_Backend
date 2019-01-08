@@ -409,7 +409,7 @@ exports.revealYourself = async (req, res, next) => {
           }
         });
 
-        if (revealToUsers != '' && user.revealYourself === false) {
+        if (revealToUsers != '') {
           user['revealToUsersID'].push(ids);
           user.revealYourself = true;
           user.save()
