@@ -182,9 +182,10 @@ exports.silentPush = async (req, res) => {
 					androidDevices.push(device.deviceId);
 				}
 			});
+
 			androidNotification.sendAndroid(androidDevices);
 			res.status(200).send({
-				message:'notification message send successfully'
+				message: 'notification message send successfully'
 			});
 		} else {
 			res.status(500).send(err);
