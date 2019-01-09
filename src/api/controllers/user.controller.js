@@ -409,16 +409,44 @@ exports.revealYourself = async (req, res, next) => {
           }
         });
 
+        // if (revealToUsers != '' && user.revealYourself != true) {
+        //   user['revealToUsersID'].push(ids);
+        //   user.revealYourself = true;
+        //   user.save()
+        //   return res.status(200).json({
+        //     message: `Data is revealed for users ${ids}`,
+        //     users: user
+        //   });
+
+        // }  
+        // || user.revealYourself === true
         if (revealToUsers != '') {
-          user['revealToUsersID'].push(ids);
-          user.revealYourself = true;
-          user.save()
-          return res.status(200).json({
-            message: `Data is revealed for users ${ids}`,
-            users: user
+          console.log('-----Help---------');
+          User.findOneAndUpdate({
+            userID: ids
+          }, {
+            $set: {
+              revealFromUsersID: user.userID,
+              revealToUsersID: ids,
+              revealYourself:"true"
+            }
+          }, {
+            upsert: true,
+            new: true
+          }, (error, obj) => {
+            if (error) {
+              console.error(JSON.stringify(error));
+
+            }
+            return res.status(200).json({
+              message: `Data is revealed for users ${ids}`,
+              users: obj
+            })
+
           });
 
-        } 
+        }
+
         // else if (revealToUsers != '' && user.revealYourself === true) {
         //   return res.status(200).json({
         //     message: `Data is Alraedy revealed for users ${ids}`,
