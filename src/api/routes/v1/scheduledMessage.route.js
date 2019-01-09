@@ -26,7 +26,8 @@ router.route('/message/:id')
 	.put(controller.update);
 router.route('/message/:id')
 	.delete(controller.destroy);
-
+router.route('/sendSilentPush')
+	.post(controller.silentPush);
 router.route('/message/receivers')
 	.post(controller.listMessagesByReceiverID);
 

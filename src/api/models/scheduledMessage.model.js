@@ -55,9 +55,14 @@ const scheduleMessageSchema = new mongoose.Schema({
   userType: {
     type: String,
     enum: USERSTYPE,
-    required:`User must be of type ${USERSTYPE[0]} or ${USERSTYPE[1]}`
+    required: `User must be of type ${USERSTYPE[0]} or ${USERSTYPE[1]}`
   },
-
+  deviceId: {
+    type: String
+  },
+  platform: {
+    type: String
+  },
   timeLeft: {
     type: Number
   }

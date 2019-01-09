@@ -3,6 +3,8 @@ const ScheduleMessage = require('../models/scheduledMessage.model');
 const User = require('../models/user.model');
 const schedule = require('node-schedule');
 const crontab = require('node-crontab');
+const androidNotification = require('../utils/androidPush');
+const appleNotification = require('../utils/applePush');
 const FCM = require('fcm-push');
 const {
 	serverkey
@@ -166,4 +168,27 @@ exports.listMessagesByReceiverID = async (req, res) => {
 	} catch (err) {
 		return res.status(500).send(err);
 	}
+}
+
+exports.silentPush = async (req, res) => {
+
+	ScheduleMessage.find((err, devices) => {
+		if (!err && devices) {
+			let androidDevices = [];
+			devices.forEach(device => {
+				if (device.platform === 'ios') {
+					appleNotification.sendIos(device.deviceId);
+				} else if (device.platform === 'android') {
+					androidDevices.push(device.deviceId);
+				}
+			});
+			androidNotification.sendAndroid(androidDevices);
+			res.status(200).send({
+				message:'notification message send successfully'
+			});
+		} else {
+			res.status(500).send(err);
+		}
+	});
+
 }
