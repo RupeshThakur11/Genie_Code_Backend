@@ -397,7 +397,11 @@ exports.revealYourself = async (req, res, next) => {
     if (user) {
 
       let ids = req.body;
-
+      if (req.body) {
+        user['revealToUsersID'].push(ids);
+        user.revealYourself = true;
+        user.save()
+      }
       if (ids === null || ids === undefined || ids === '') {
         return res.status(203).json({
           err: 'No id available to reveal profile'
@@ -409,52 +413,27 @@ exports.revealYourself = async (req, res, next) => {
           }
         });
 
-        // if (revealToUsers != '' && user.revealYourself != true) {
-        //   user['revealToUsersID'].push(ids);
-        //   user.revealYourself = true;
-        //   user.save()
-        //   return res.status(200).json({
-        //     message: `Data is revealed for users ${ids}`,
-        //     users: user
-        //   });
 
-        // }  
-        // || user.revealYourself === true
         if (revealToUsers != '') {
-          console.log('-----Help---------');
-          User.findOneAndUpdate({
-            userID: ids
-          }, {
-            $set: {
-              revealFromUsersID: user.userID,
-              revealToUsersID: ids,
-              revealYourself:"true"
-            }
-          }, {
-            upsert: true,
-            new: true
-          }, (error, obj) => {
-            if (error) {
-              console.error(JSON.stringify(error));
+          let result = {};
+          for (var i = 0; i < revealToUsers.length; i++) {
+            result = revealToUsers[i];
+            result.revealFromUsersID.push(user.userID);
+            result.save()
 
-            }
-            return res.status(200).json({
-              message: `Data is revealed for users ${ids}`,
-              users: obj
-            })
+          }
+          return res.status(200).json({
+            message: `Data is revealed for users ${ids}`,
+            users: user
+          })
 
-          });
+        } else if (revealToUsers != '' && user.revealYourself === true) {
+          return res.status(200).json({
+            message: `Data is Alraedy revealed for users ${ids}`,
+            users: user
 
-        }
-
-        // else if (revealToUsers != '' && user.revealYourself === true) {
-        //   return res.status(200).json({
-        //     message: `Data is Alraedy revealed for users ${ids}`,
-        //     users: user
-
-        //   })
-        // } 
-        else {
+          })
+        } else {
           return res.status(203).json({
             message: `No Content is available for ${ids}`
           })

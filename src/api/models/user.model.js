@@ -4,6 +4,7 @@ const {
   omitBy,
   isNil
 } = require('lodash');
+const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 const moment = require('moment-timezone');
 const jwt = require('jwt-simple');
@@ -213,6 +214,13 @@ userSchema.plugin(autoIncrement.plugin, {
   startAt: 1,
   incrementBy: 1
 });
+
+userSchema.pre('save', function (next) {
+  this.revealToUsersID = _.uniq(this.revealToUsersID);
+  this.revealFromUsersID = _.uniq(this.revealFromUsersID);
+  next();
+});
+
 userSchema.pre('save', async function save(next) {
   try {
     if (!this.isModified('password')) return next();
