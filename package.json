@@ -88,7 +88,7 @@
     "method-override": "^2.3.8",
     "mjml": "^4.1.1",
     "moment-timezone": "^0.5.13",
-    "mongoose": "^5.3.3",
+    "mongoose": "^5.7.5",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-unique-array": "^0.2.0",
     "morgan": "^1.8.1",
